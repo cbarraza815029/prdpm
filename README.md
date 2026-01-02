@@ -7,12 +7,14 @@ Will need to install gpiozero Python library if not already installed.
 
 # How to use
 Once running, prdpm will prompt you for a command. You can choose from the following:
--o(n)     : Turn on device
--o(ff)    : Turn off device
--r(eset)  : Reset device
--s(tatus) : Display device status (on/off)
--h(elp)   : Display list of commands
--e(xit)   : Exit Remote Device Power Management
+```
+o(n)     : Turn on device
+o(ff)    : Turn off device
+r(eset)  : Reset device
+s(tatus) : Display device status (on/off)
+h(elp)   : Display list of commands
+e(xit)   : Exit Remote Device Power Management
+```
 
 Any input other than the above will give you the message "Command not supported. Type 'h(elp)' for list of commands."
 

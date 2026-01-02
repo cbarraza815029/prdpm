@@ -24,7 +24,7 @@ Any input other than the above will give you the message "Command not supported.
 ## main.py
 The menu where you input commands. See **How to use** for list of commands or type **h** or **help** in the menu.
 
-## pwr_ctrl.py (coming soon)
+## pwr_ctrl.py
 The module that powers a device on and off.
 
 Begins by assigning the **pwr** variable (see below). Then pings the device using the **target_host** variable (see below). Returns with a description of the device (on or off) and whether you want to power it on or off. Turning it on or off will set the GPIO pin state to HIGH for 0.5 seconds and then back to LOW which simulates pressing the power switch on a PC. Declining to turn the device on or off will take you back to the manin menu and a mistyped command will restart the module.

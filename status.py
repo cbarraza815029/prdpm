@@ -1,7 +1,6 @@
 import ping
     
 def main():
-    #print("Enter hostname or IP address")
     target_host = "freenas.local"
     print("Checking device status...")
 

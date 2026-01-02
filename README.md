@@ -6,6 +6,8 @@ This project was designed to control a single device with an ATX Controller boar
 Will need to install gpiozero Python library if not already installed.
 
 # How to use
+On linux, cd to where you want to save prdpm and then run **python3 ./main.py** OR run **python3 /path/to/prdpm/main.py**.
+
 Once running, prdpm will prompt you for a command. You can choose from the following:
 ```
 o(n)     : Turn on device
@@ -18,4 +20,34 @@ e(xit)   : Exit Remote Device Power Management
 
 Any input other than the above will give you the message "Command not supported. Type 'h(elp)' for list of commands."
 
-# Individual Module Descriptions (coming soon)
+# Individual Module Descriptions (incomplete)
+## main.py
+The menu where you input commands. See **How to use** for list of commands or type **h** or **help** in the menu.
+
+## pwr_ctrl.py (coming soon)
+The module that powers a device on and off.
+
+Begins by assigning the **pwr** variable (see below). Then pings the device using the **target_host** variable (see below). Returns with a description of the device (on or off) and whether you want to power it on or off. Turning it on or off will set the GPIO pin state to HIGH for 0.5 seconds and then back to LOW which simulates pressing the power switch on a PC. Declining to turn the device on or off will take you back to the manin menu and a mistyped command will restart the module.
+
+### pwr variable
+The variable assigned to the GPIO pin connected to the ATX front panel power switch via the controller board. The gpiozero library uses Broadcom (BCM) pin numbering for the GPIO pins (see https://gpiozero.readthedocs.io/en/stable/recipes.html#pin-numbering); set to BCM pin 23 (i.e. board pin 16) by default for use with the perdeas controller board. You can change this to a different pin if using a different controller board.
+
+### target_host variable
+The variable assigned to the IP address or hostname of target device. Used to tell whether the device is already on or off. Set to "freenas.local" by default; change this to the IP address or hostname of the device you want to power on or off.
+
+## reset.py
+The module that resets a device.
+
+Works similarly to **pwr_ctrl.py**, but uses a different GPIO pin to reset a device and does so only if the device is on and you confirm the reset. Otherwise, it returns you to the main menu.
+
+### pwr_rst variable
+The variable assigned to the GPIO pin connected to the ATX front panel reset switch via the controller board. Set to BCM pin 27 (i.e. board pin 13) by default for use with the perdeas controller board. You can change this to a different pin if using a different controller board.
+
+### target_host variable
+Same variable as the one used in **pwr_ctrl.py**.
+
+## ping.py (coming soon)
+
+## status.py (coming soon)
+
+## help_rdpm (coming soon)

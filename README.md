@@ -54,5 +54,8 @@ Got this code from Google's Gemini AI overview because I'm unfamiliar with how P
 ## status.py
 The module that tells you whether a device is on or off using **ping.py**.
 
-## help_rdpm
+## help_rdpm.py
 The module that lists all commands available in prdpm. See list in **How to use**.
+
+## vars.py
+The module that contains commonly used variables. Changes made here will apply to the entire program (e.g. changing target_host from "freenas.local" to "file-server.net" will change the device being pinged; Pi must be hooked up to the new device for prdpm to retain functionality).

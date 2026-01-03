@@ -46,8 +46,13 @@ The variable assigned to the GPIO pin connected to the ATX front panel reset swi
 ### target_host variable
 Same variable as the one used in **pwr_ctrl.py**.
 
-## ping.py (coming soon)
+## ping.py
+The module that pings a device to find out if it is on or off.
 
-## status.py (coming soon)
+Got this code from Google's Gemini AI overview because I'm unfamiliar with how Python's subprocess module works. Will attempt to rewrite it once I know more Python.
 
-## help_rdpm (coming soon)
+## status.py
+The module that tells you whether a device is on or off using **ping.py**.
+
+## help_rdpm
+The module that lists all commands available in prdpm. See list in **How to use**.

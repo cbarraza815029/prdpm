@@ -1,21 +1,17 @@
-from gpiozero import DigitalOutputDevice
 from time import sleep
 import ping
-
-pwr_rst = DigitalOutputDevice(27)
+import vars
 
 def reset():
-    target_host = "freenas.local"
-
-    if ping.ping_host(target_host):
-        print(f"{target_host} is on")
-        print(f"Reset {target_host} (y/n)?")
+    if ping.ping_host(vars.target_host):
+        print(f"{vars.target_host} is on")
+        print(f"Reset {vars.target_host} (y/n)?")
         usr_input = input(":~ $ ").lower().strip()
         if usr_input == "y":
-            print(f"Resetting {target_host}...")
-            pwr_rst.on()
+            print(f"Resetting {vars.target_host}...")
+            vars.pwr_rst.on()
             sleep(0.5)
-            pwr_rst.off()
+            vars.pwr_rst.off()
             print("")
         elif usr_input == "n":
             print("Reset canceled")
@@ -24,5 +20,5 @@ def reset():
             print("Command not supported")
             print("")
     else:
-        print(f"{target_host} is off")
+        print(f"{vars.target_host} is off")
         print("")

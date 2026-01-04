@@ -6,7 +6,7 @@ import help_rdpm
 
 def main():
     print("---------------------------------------------------")
-    print("Pi Remote Device Power Management Tool v2026.01.01")
+    print("Pi Remote Device Power Management Tool v2026.01.03")
     print("---------------------------------------------------")
     print("Enter Command")
     usr_input = input(":~ $ ").lower().strip()

@@ -1,6 +1,6 @@
-from time import sleep
 import ping
 import vars
+import push
 
 def reset():
     if ping.ping_host(vars.target_host):
@@ -9,9 +9,7 @@ def reset():
         usr_input = input(":~ $ ").lower().strip()
         if usr_input == "y":
             print(f"Resetting {vars.target_host}...")
-            vars.pwr_rst.on()
-            sleep(0.5)
-            vars.pwr_rst.off()
+            push.button(vars.pwr_rst)
             print("")
         elif usr_input == "n":
             print("Reset canceled")

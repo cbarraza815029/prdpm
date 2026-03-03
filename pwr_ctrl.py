@@ -1,6 +1,6 @@
-from time import sleep
 import ping
 import vars
+import push
 
 def on_off():
     if ping.ping_host(vars.target_host):
@@ -9,9 +9,7 @@ def on_off():
         usr_input = input(":~ $ ").lower().strip()
         if usr_input == "y":
             print(f"Shutting down {vars.target_host}...")
-            vars.pwr.on()
-            sleep(0.5)
-            vars.pwr.off()
+            push.button(vars.pwr)
             print("")
         elif usr_input == "n":
             print("Shutdown canceled")
@@ -26,9 +24,7 @@ def on_off():
         usr_input = input(":~ $ ").lower().strip()
         if usr_input == "y":
             print(f"Powering on {vars.target_host}...")
-            vars.pwr.on()
-            sleep(0.5)
-            vars.pwr.off()
+            push.button(vars.pwr)
             print("")
         elif usr_input == "n":
             print("Power on canceled")

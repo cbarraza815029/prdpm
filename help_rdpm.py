@@ -4,6 +4,7 @@ def help():
     print("o(ff)    : Turn off device")
     print("r(eset)  : Reset device")
     print("s(tatus) : Display device status (on/off)")
+    print("c(hange) : Change IP address or hostname of device")
     print("h(elp)   : Display list of commands")
     print("e(xit)   : Exit Remote Device Power Management")
     print("")

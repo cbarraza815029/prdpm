@@ -7,7 +7,7 @@ import change
 
 def main():
     print("---------------------------------------------------")
-    print("Pi Remote Device Power Management Tool v2026.03.09")
+    print("Pi Remote Device Power Management Tool v2026.03.10")
     print("---------------------------------------------------")
     usr_input = input("Command: ").lower().strip()
     if usr_input == "on" or usr_input == "off" or usr_input == "o":

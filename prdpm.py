@@ -35,7 +35,9 @@ def help():
 #---------------------------------------------------------------------------------------------------
 #Push Button Function
 #---------------------------------------------------------------------------------------------------
-#Pases through gpiozero pin for power or reset and "presses" it for 0.5 second
+#Pases through gpiozero pin for power or reset and "presses" it. Works by setting a GPIO pin state 
+#to HIGH for 0.5 seconds and then back to LOW [i.e. vars.pwr.on(), sleep(0.5), vars.pwr.off()] 
+#which simulates pressing the power switch on a PC.
 def push_button(select_pin):
     select_pin.on()
     sleep(0.5)
@@ -45,6 +47,11 @@ def push_button(select_pin):
 #Ping Function
 #---------------------------------------------------------------------------------------------------
 #Pings a network host and returns 0 (i.e. True) if the host responds, 1 (i.e. False) otherwise.
+#Sets the param variable to "-n" for windows systems or "-c" for linux systems and then 
+#constructs the command variable using param and the device ip/hostname passed through 
+#as a paramter from vars.py. Runs a subprocess the result of which gets assigned to the 
+#ping_result variable. Finally, the returncode of ping_result gets compared to 0: 
+#returns True if returncode equals 0 (i.e. success) otherwise returns False (i.e. failure).
 def ping(host):
     param = "-n" if platform.system().lower() == "windows" else "-c"
     command = ['ping', param, '1', host]
@@ -133,7 +140,10 @@ def reset():
 #---------------------------------------------------------------------------------------------------
 #Change Function
 #---------------------------------------------------------------------------------------------------
-#Changes the saved hostname/ IP addrerss in vars.py of the target device.
+#Changes the saved hostname/ IP addrerss in vars.py of the target device. Imports the vars.py file 
+#and usr_input var as parameters. Then opens vars.py and creates a list from its contents. The list 
+#gets indexed and looks for the line of code containing "target_host" after which it gets changed 
+#to the usr_input var. Completes the operation by writing the list back to vars.py.
 def change_vars(file_param, new_target_host):
     with open(file_param, "r") as file:
         file_lines = file.readlines()
@@ -146,7 +156,12 @@ def change_vars(file_param, new_target_host):
 #---------------------------------------------------------------------------------------------------
 #Change Sub Menu Function
 #---------------------------------------------------------------------------------------------------
-#Submenu for the above function.
+#Submenu for the above function. Begins by creating the file_abs_path variable that stores the 
+#location of the vars.py file as a string. Then it prints the current ip/hostname and prompts 
+#you for a new one. Entering "exit" or "e" will return you to the main menu. Anything else will
+#run the change_vars function that changes the target_host variable in the vars.py file. It 
+#completes by printing a success message and changes the target_host var in memory so you don't 
+#need to restart prdpm for the ip/hostname change to take effect.
 def change_vars_sub_menu():
     program_title()
     file = "vars.py"
@@ -168,7 +183,7 @@ def change_vars_sub_menu():
 #---------------------------------------------------------------------------------------------------
 #Main Menu Function
 #---------------------------------------------------------------------------------------------------
-#Main menu of PRDPM.
+#Main menu of prdpm.
 def main():
     while True:
         program_title()

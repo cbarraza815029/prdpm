@@ -15,7 +15,7 @@ def program_title():
     #clear_scren = "cls" if platform.system().lower() == "windows" else "clear"
     #os.system(clear_scren)
     print("---------------------------------------------------")
-    print("Pi Remote Device Power Management Tool v2026.06.15")
+    print("Pi Remote Device Power Management Tool v2026.06.16")
     print("---------------------------------------------------")
 
 #---------------------------------------------------------------------------------------------------
@@ -163,10 +163,11 @@ def change_vars(file_param, dict_param, usr_input_ip_or_pin, usr_input_param):
     return dict_param
 
 #---------------------------------------------------------------------------------------------------
-#Check ValueError Function
+#Check Input Error Function
 #---------------------------------------------------------------------------------------------------
 #Checks for value errors in user input when changing power or reset pins
-def check_value_error(pin_pwr_or_rst):
+def check_input_error(pin_pwr_or_rst, pwr_pin, rst_pin):
+    valid_gpio_pins = [4, 5, 6, 12, 13, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27]
     if pin_pwr_or_rst == "power" or pin_pwr_or_rst == "pwr" or pin_pwr_or_rst == "p":
         pin_type = "power"
     if pin_pwr_or_rst == "reset" or pin_pwr_or_rst == "rst" or pin_pwr_or_rst == "r":
@@ -176,8 +177,18 @@ def check_value_error(pin_pwr_or_rst):
         try:
             pin_final_val = int(input(f"New {pin_type} pin: ").lower().strip())
         except ValueError:
-            print("Integer values only. Try again!")
-    return pin_final_val
+            print("Integer values only. Please try again!")
+    if pin_final_val not in valid_gpio_pins:
+        print(f"Error: Pin {pin_final_val} is not a valid BCM numbered GPIO pin. Please try again!")
+        check_input_error(pin_type, pwr_pin, rst_pin)
+    if pin_final_val == pwr_pin and pin_type == "reset":
+        print(f"Error: Pin {pin_final_val} currently in use by the power pin. Please try again!")
+        check_input_error(pin_type, pwr_pin, rst_pin)
+    if pin_final_val == rst_pin and pin_type == "power":
+        print(f"Error: Pin {pin_final_val} currently in use by the reset pin. Please try again!")
+        check_input_error(pin_type, pwr_pin, rst_pin)
+    else:
+        return pin_final_val
 
 #---------------------------------------------------------------------------------------------------
 #Change Sub Menu Function
@@ -204,13 +215,13 @@ def change_vars_sub_menu(file_path_param, dict_param_change_menu, target_host_pa
             usr_input_pin_sel = input("Change power or reset pin?: ").strip().lower()
             if usr_input_pin_sel == "power" or usr_input_pin_sel == "pwr" or usr_input_pin_sel == "p":
                 print(f"{'Current power pin: '}{pwr}")
-                usr_input_pin_pwr = check_value_error(usr_input_pin_sel)
+                usr_input_pin_pwr = check_input_error(usr_input_pin_sel, pwr, pwr_rst)
                 sett_dict = change_vars(file_path_param, dict_param_change_menu, usr_input_pin_sel, usr_input_pin_pwr)
                 #print(f"{'Success! Power pin changed from '}{'"'}{pwr}{'"'}{' to '}{'"'}{usr_input_ip}{'"'}")
                 return sett_dict
             if usr_input_pin_sel == "reset" or usr_input_pin_sel == "rst" or usr_input_pin_sel == "r":
                 print(f"{'Current reset pin: '}{pwr_rst}")
-                usr_input_pin_rst = check_value_error(usr_input_pin_sel)
+                usr_input_pin_rst = check_input_error(usr_input_pin_sel, pwr, pwr_rst)
                 sett_dict = change_vars(file_path_param, dict_param_change_menu, usr_input_pin_sel, usr_input_pin_rst)
                 return sett_dict
         if usr_input_init == "exit" or usr_input_init == "e" or usr_input_init == "back" or usr_input_init == "b" or usr_input_init == "return" or usr_input_init == "rtrn":
